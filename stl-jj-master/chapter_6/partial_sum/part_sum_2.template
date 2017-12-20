@@ -1,0 +1,20 @@
+template <class InputIteratot, class OutputIterator, class BinaryOperation>
+OutputIterator partial_sum(InputIterator first, InputIterator last, OutputIterator result, BinaryOperation binary_op)
+{
+	if (first == last ) return result;
+	return _partial_sum(first, last, result, value_type(first), binary_op);
+
+}
+
+template <class InputIterator, class OutputIterator, class T, class BinaryOperation>
+OutputIterator _partial_sum (InputIterator first, InputIterator last, T*, BinaryOperation binary_op)
+{
+	T value = *first;
+	while (++first != last)
+	{
+		value = binary_op(value, *first);  //指定前n 个元素的总和
+		*++result = value; 
+	}
+	retrun ++result;
+
+}

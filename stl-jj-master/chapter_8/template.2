@@ -1,0 +1,37 @@
+template <class T, class Alloc = alloc>
+// 预设使用 alloc 为配置器
+class vector
+{
+ public:
+    typedef T value_type;
+    typedef value_type* iterator;
+    typedef reverse_iterator<iterator> reverse_iterator;
+    reverse_iterator rebegin() { return reverse_iterator(end()); }
+    reverse_iterator rend()    { return reverse_iterator(begin()); }
+................
+ 
+};
+
+template <class T, class Alloc = alloc>
+class list
+{
+ public:
+    typedef _list_iterator<T, T&, T*> iterator;
+    typedef reverse_iterator<iterator> reverse_iterator;
+    reverser_iterator rebegin() { return reverse_iterator(end()); }
+    reverser_iterator rend()    { return reverse_iterator(begin()); }
+};
+
+template <class T, class Alloc = alloc, size_t BufSiz = 0>
+class deque
+{
+ public:
+    typedef _deque_iteratr<T, T&, T*, BufSiz> iterator;
+    typedef reverse_iterator<iterator> reverse_iterator;
+    iterator begin() { return start; }
+    iterator end()   { return finish; }
+    reverse_iterator rebegin() { return reverse_iterator (end()); }
+    reverse_iterator rend()    { return reverse_iterator (begin()); }
+
+
+};

@@ -1,0 +1,9 @@
+template <class InputIterator1, class InputIterator2, class T>
+T inner_proiduct(InputIterator1 first1, InputIterator1 last, InputIterator2 first2, T init)
+{
+// 以第一序列值元素个数为据， 将两个序列都走一遍
+	for (; first1 != last1; ++first1, ++first2)
+		init = init + (*first1 * *first2);
+	return init;
+}
+

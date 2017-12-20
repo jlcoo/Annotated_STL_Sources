@@ -1,0 +1,8 @@
+template <class InoputIterator, class T, class BinaryOperation>
+T accumulate (InputIterator first, InputIterator last, T init, BinaryOperation bninary_op)
+{
+	for (; first != last; ++first)
+		init = binary_op(init, *first);
+	return init;
+
+}

@@ -1,0 +1,13 @@
+template <class InputIterator, class OutPutIterator, class T>
+OutputIterator _adjacent_difference(InputIterator first, InputIterator last, OutputIterator result, T*)
+{
+	T value = *first;
+	while (++ first != last)
+	{
+		T tmp = *first;
+		*++result = tmp - value; // 相邻两元素的差额（后-前） 赋值给目的端
+		value = tmp;
+	}
+	return ++result;
+
+}

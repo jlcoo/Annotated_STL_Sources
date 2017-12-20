@@ -1,0 +1,22 @@
+tempalte <class InputIterator, class OutputIterator, class BinaryOpertaion>
+OutputIterator adjacent_difference (InputIterator first, InputIterator last, OutputIterator result, BinaryOperation binary_op)
+{
+	if(first == last) return result;
+		*result = *first;
+	return _adjacent_difference(first, last, result, value_type(first), binary_op);
+
+}
+
+template <class InputIterator, class OutputIterator, class T, class BinaryOperation>
+OutputIterator _adjacent_difference(InpoutIterator first, InpoutIterator last, OutputIterator binary_op)
+{
+	T value = *first;
+	while (++first != last) // 走过整个区间
+	{
+		T tmp = *first;
+		*++result = binary_op(tmp, value);
+		value = tmp;
+
+	}
+	return ++result;
+}

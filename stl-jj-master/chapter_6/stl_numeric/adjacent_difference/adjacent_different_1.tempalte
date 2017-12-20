@@ -1,0 +1,17 @@
+template <class InputIterator, class OutputIterator>
+OutputIterator adjacent_difference(InoutIterator first, InputIterator last, OutputIterator result)
+{
+	if (first == last) return result;
+		*result = *first;
+	return _adjacent_difference(first, last, value_type(first));
+
+	// 侯捷认为 （验证） 不需要上行那样传递调用， 改用下面写法
+	// if( first == last) return result;
+	// *result = * first;
+	// iterator_traits<InputIterator>::value_type value = *first;
+	// while (++first != last)
+	// {
+	//  _adjacent_difference();
+	// }
+
+}

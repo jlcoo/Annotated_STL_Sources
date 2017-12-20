@@ -1,0 +1,9 @@
+template <class InputIterator1, class InputIterator2, class T, class BinaryOperation1, class BinaryOpertaion2>
+T inner_product(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, T init, BinaryOperation1 binary_op1, BinaryOperation2 binary_op2)
+{
+	// 以第一个序列值元素个数为据， 将两个序列都走一遍
+	for (; first1 != last1; ++first1, ++first2)
+	// 以外界提供的仿函数来取代第一个版本中的 operator* 和 operator+
+		init = biinary_op1(init, binary_op2(*first1, *first2));
+	return init;
+}

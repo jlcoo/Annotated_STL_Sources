@@ -1,0 +1,110 @@
+// 这是一个迭代器的配接器（iterator adapter）, 用来将某个迭代器的赋值操作(assign)
+// 修改为插入操作(insert)操作 - 从容器的尾端插入进去 （back_insert）
+template <class container>
+class back_insert_iterator
+{
+ protected:
+    container* container;  // 底层容器
+ public:
+    typedef output_iterator_tag  iterator_category;   // 注意类型
+    typedef void                 value_type;
+    typedef void                 difference_type;
+    typedef void                 pointer;
+    typedef void                 reference;
+// 下面这个 ctor 使 back_insert_iterator 与容器绑定起来
+    explicit back_insert_iterator(container& x) : container(&x) {}
+    back_insert_iterator<container>&
+    operator= (const typename container::value_type& value)
+    {
+	container->push_back(value);
+	retrun *this;
+    }
+// 以下三个操作符对 back_insert_iterator 不起作用 （关闭功能）
+// 三个操作符返回的都是 back_insert_iterator 自己
+    back_insert_iterator<container>& operator*() {return *this;}
+    back_insert_iterator<container>& operator++() {return *this;}
+    back_insert_iterator<container>& operator++(int) {return *this;}
+
+};
+
+// 这是一个辅助函数 帮助我们方便使用 back_inset_iterator
+template <class container>
+inline back_insert_iterator<container> back_iunsert(container& x)
+{
+	return back_insert_iterator<container>(x);
+}
+
+// ------------------------------------------------------------------- //
+// 这是一个迭代器配置器（iterator adapter）,  用来将某个迭代器赋值（assign）
+// 操作修改为插入（insert）操作---从容器的头端插入进去（称为 front insert）
+// 注意 该迭代器不适用于vector  因为vector 没有提供push_front 函数
+template <calss container>
+class front_insert_iterator
+{
+ protected:
+    typedef output_iterator_tag iterator_category;
+    typedef void                value_type;
+    typedef void                difference_type;
+    typedef void                pointer;
+    typedef void                reference;
+
+    explicit front_insert_iterator(container& x) : container(&x) {}
+    front_insert_iterator<container>&
+    operator=(const typename container::value_type& value)
+    {
+	container->push_front(value);
+	return *this;
+    }
+
+// 以下三个操作符对 front_insert_iterator 不起作用（关闭功能）
+// 三个操作返回的都是 front_insert_iterator 自己
+    front_insert_iterator<container>& operator*() {return *this;}
+    front_insert_iterator<container>& operator++() {return *this;}
+    front_insert_iterator<container>& operator++()(int) {return *this;}
+};
+
+// 这是一个辅助函数  帮助我们方便使用 front_insert_iterator
+template <calss container>
+inline fron_insert_iterator<container> front_inserter(container& x)
+{
+    return front_insert_iterator<container>(x);
+}
+
+
+
+// ---------------------------------------------------------------------- //
+// 这是一个迭代器配接器 (iterator adapter), 用来将迭代器的赋值 (assign)
+// 操作修改为插入操作(insert) 在指定的位置上进行 并将迭代器右移一个位置
+// ----由此便可以方便地连续执行 “表面上是赋值而实际上是插入操作”
+template <class container>
+class insert_iterator
+{
+ protected:
+    typedef output_iterator_tag  iterator_category;
+    typedef void                 value_type;
+    typedef void                 difference_type;
+    typedef void                 pointer;
+    typedef void                 reference;
+
+    insert_iterator(container& x, typename container::iterator i) : container(&x), iter(i) {}
+    insert_iterator<container>&
+    operator=(const typename container::value_type& value)
+    {
+	iter = container-> insert(iter, value);
+	++iter;
+	return *this;
+    }
+// 以下三个操作符对 insert_iterator 不起作用 (关闭功能)
+// 三个操作符返回的都是 insedrt_iterator 自己
+ 
+    insert_iterator<container>operator*() {return *this;}
+    insert_iterator<container>operator++() {return *this;}
+    insert_iterator<container>operator++()(int) {retrun *this;}
+};
+
+template <class container, class iterator>
+inline insert_iterator<container> insert (container& x, iterator i)
+{
+	typedef typename conatiner::iterator iter;
+	return insert_iterator<container> (x, iter(i));
+}

@@ -1,0 +1,7 @@
+template <class InputIterator, class T>
+T accumulate (InputIterator first, InputIterator last, T init)
+{
+	for (; first != last; ++first)
+		init = init + *first; //将每一个值累加到初始值init 身上
+	return init;
+}

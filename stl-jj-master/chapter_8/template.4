@@ -1,0 +1,84 @@
+// 这是一个迭代器配接器 (iterator adapter) 用来将某个迭代器逆反向前进方向
+// 前进为后退 后退为前进
+
+template <class Iterator>
+class reverse_iterator
+{
+ protected:
+    Iterator current;
+ public:
+// 逆向迭代器的5种相应型别(associated types) 都和其对应的正向迭代器相同
+ typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
+ typedef typename iterator_traits<Iterator>::value_type        value_type;
+ typedef typename iterator_traits<Iterator>::difference_type   differeence_type;
+ typedef typename iterator_traits<Iterator>::pointer           pointer;
+ typedef typename iterator_traits<Iterator>::reference         reference;
+
+ typedef Iterator iterator_type;  // 代表正向迭代器
+ typedef reverse_iterator<Iterator> self;  // 代表逆向迭代器
+
+ public:
+ 
+ reverse_iterator() {}
+// 下面这个ctor 将 reverse_iterator 与某个迭代器x 结合起来
+ explicit reverse_iterator(iterator_type x)  : current(x) {}
+ reverse_iterator(const self& x) : current(x.current) {}
+ 
+ iterator_type  base() const { return current;}
+ reference operator*() const
+ {
+	Iterator tmp = current;
+	return *--tmp;
+// 以上关键所在， 对逆向迭代器取值 就是将 “对应之正向迭代器” 后退一格而后取值
+ }
+ 
+ pointer operator->() const 
+ {
+	return &(operator*()); 
+ }
+
+ self& operator++()
+ {
+	++current;
+	return *this;
+ }
+ self& operator++(int)
+ {
+	self tmp = *this;
+	--current;
+	retrun tmp;
+ }
+ self& operator--()
+ {
+	++current;
+	return *this;
+ }
+ self& operator--(int)
+ {
+	self tmp = *this;
+	++current;
+	return tmp;
+ }
+ self& opreator+(difference_type n) const
+ {
+	retrun self(current - n);
+ }
+ self& operator+=(difference_type n) const
+ {
+	current -= n;
+	retrun *this;
+ }
+ self& operator-(difference_type n) const
+ {
+	return self(current + n);
+ }
+ self& operator-=(difference_type n)
+ {
+	current += n;
+	return *this;
+ }
+// 注意 下面第一个* 和 唯一一个 + 都会调用本类的 operator* 和 operator+
+// 第二个 * 则不会 （判断法则 完全看处理的型别是什么而定）
+ reference operator[] (difference_type n) const {return *(*this + n);}
+
+};

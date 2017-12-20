@@ -1,0 +1,18 @@
+template <class InputIterator， class OutputIterator, class>
+OutputIterator partial_sum(InputIterator first, InputIterator last, OutputIterator result)
+{
+	if (first == last)
+		return result;
+	return _partial_sum(InputIterator first, InputIterator last, OutputIterator result, T*)
+{
+	T value = *first;
+	while (++first != last)
+	{
+		value = value + *first;  // 前n个元素总和
+		*++result = value;       // 指定给目的端
+	}
+	return ++result;
+
+}
+
+}
